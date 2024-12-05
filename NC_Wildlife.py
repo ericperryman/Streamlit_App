@@ -1,8 +1,9 @@
+#venv\scripts\activate.bat
+
 import altair as alt
 import pandas as pd
 import streamlit as st
 import snowflake as sn
-import geopandas as gpd
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
@@ -59,15 +60,19 @@ with tab4:
         st.altair_chart(alt_chart, use_container_width=True)
 
 with tab5:
+      selectbox_species = wildlife_df['Common Name']
+      selectbox_species = selectbox_species.dropna()
+      val = st.selectbox("choose your species!", selectbox_species).lower().capitalize()
+
       urlBase = "https://en.wikipedia.org/wiki/"
-      urlExt = "Calopteryx amata"
+      urlExt = val
       urlExtEdit = urlExt.replace(" ", "_")
       urlComb = urlBase+urlExtEdit
       st.write("for more info on this species, check out this [link](%s)" % urlComb)
 
 with tab6:
     st.title("Map of interest")
-    gdf = gpd.read_file("map2.geojson")
-    df = pd.DataFrame(gdf)
-    #df = {'lat': [35.7596], 'lon': [-79.0193]}
-    st.map(df)
+    # gdf = gpd.read_file("map2.geojson")
+    # df = pd.DataFrame(gdf)
+    # #df = {'lat': [35.7596], 'lon': [-79.0193]}
+    # st.map(df)
