@@ -1,79 +1,148 @@
-#venv\scripts\activate.bat
-
-
+# Import python packages
+import streamlit as st
 import altair as alt
 import pandas as pd
-import streamlit as st
-import snowflake as sn
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+from urllib.parse import quote
+
+
 
 st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
-st.title("NC Wildlife")
-st.markdown("Use this Streamlit app to make your own scatterplot about nc wildlife!aaa")
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "summary"
 
-wildlife_df = pd.read_csv('merged-county-files.csv', on_bad_lines='skip')
+def switch_page(page: str):
+    st.session_state.current_page = page
+
+if "selected_county" not in st.session_state:
+    st.session_state.selected_county = None
+    
+if "selected_taxonomic" not in st.session_state:
+    st.session_state.selected_taxonomic = None    
+    
 
 #sidebar
 st.sidebar.subheader("Navigation")
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Summary", "Overview", "Param Select", "Data", "wiki", "geo"])
-with tab1:
-    #def summary():
-        st.title('NC Wildlife Application')
-        st.write('This app will help you explore attributes about NC Wildlife')
 
-with tab2:
-    st.title("This tab will hold overview of the data")
-    st.write("mainly showing the breakdown of the taxonomic groups etc")
+summary_button = st.sidebar.button(
+    "Home".upper(), on_click=switch_page, args=["summary"]
+)
 
-with tab3:
-    st.title("the user will narrow down what they want to see")
-    st.write("if they want to get rid of some types or choose specific groups to look at")
-with tab4:
-    #def data():
-        #wildlife_df = pd.read_csv('merged-county-files.csv', on_bad_lines='skip')
+data_button = st.sidebar.button(
+    "Data Overview".upper(), on_click=switch_page, args=["data"]
+)
 
-        features = wildlife_df.select_dtypes(include=['number']).columns.tolist()
-        #features = [col for col in features if col in ['Taxonomic Group', 'County']]
-        features = ['Taxonomic Group', 'County']
-        selected_x_var = st.selectbox(
-            "What do you want the x variable to be?",
-            features,
-            
-        )
-        #x = len(selected_x_var)
-        selected_y_var = st.selectbox(
-            "What about the y?",
-            features,
-        )
+species_button = st.sidebar.button(
+    "Species select".upper(), on_click=switch_page, args=["species_select"]
+)
+wildlife_df = pd.read_csv('merged-county-files.csv')
 
-        alt_chart = (
-            alt.Chart(wildlife_df, title="Scatterplot of NC's wildlife")
-            .mark_circle()
-            .encode(
-                x=alt.X(selected_x_var, scale=alt.Scale(zero=False)),
-                y=alt.Y(selected_y_var, scale=alt.Scale(zero=False)),
-            # y=alt.Y(x),
+def summary():
+    st.image('orr_western_nc.jpg')
+    st.title('North Carolina Wildlife effected by Hurricane Helene')
+    st.write('The purpose of this application is to provide a data driven analysis of the unique ecosystem of North Carolina and the species that may have been impacted by Hurricane Helene. In the Data Overview page, you will be able to view the amount of species that have been catalogued in one of three counties: Buncombe, Yancey, and Rutherford county. While North Carolina has 100 counties, my intended purpose of this application was to identify species within the highest impact zone of Hurricane Helene of October 2024 in Western North Carolina and to view the unique species that call this state their home. This data was accessed by the North Carolina Natural Heritage Program.')
+    
+    col1,col2,col3 = st.columns(3)
+    with col2:
+        st.image('NCNHPimage.png')
+        ncnhp_url = f"https://NCNHP.org"
+        st.markdown((ncnhp_url))
 
-                color="Taxonomic Group",
+def data():
+    
+    print(wildlife_df)
+    print("-=-----------")
+    counties = wildlife_df['County'].unique()
+    counties = counties.astype('U')
+    taxonomic = wildlife_df['Taxonomic Group'].unique()
+    
+    features = wildlife_df.columns.tolist()
+    print(features)
+    print(features)
+    st.title("Data Overview")
+    selected_county = st.selectbox(
+            "What county do you want to filter by?",
+            counties,
+    )
+    
+    tab1, tab2 = st.tabs(['Charts', 'Data'])
+    with tab1:
+        col1, col2 = st.columns(2)
+        with col1:
+            st.subheader('Count of Taxonomic Group per County')
+            bar_df = wildlife_df[wildlife_df['County'] == selected_county]
+            bar_chart = alt.Chart(bar_df).mark_bar().encode(
+                x="Taxonomic Group", y="count()"
+            ).properties(
+                height=650,
             )
-            .interactive()
+            bar_chart
+        with col2:
+            st.subheader('NC Conservatory Status per Taxonomic Group')
+            circle_df = wildlife_df[wildlife_df['County'] == selected_county]
+            chart1 = alt.Chart(circle_df).mark_circle(size=60).encode(
+                x='NC Status',
+                y='Taxonomic Group',
+                color=alt.Color('Common Name', legend=None),
+                tooltip='Common Name'
+            ).interactive()
+            chart1
+        
+    with tab2:
+        selected_taxonomic = st.selectbox(
+            "What Taxonomic Group do you want to filter by?",
+            taxonomic,
+    )
+        filtered_df = wildlife_df.loc[(wildlife_df['County'] == selected_county) & (wildlife_df['Taxonomic Group'] == selected_taxonomic)]
+        st.dataframe(filtered_df)
+
+
+def species_select():
+    st.title("Pick a Taxonomic group & Species for more information!")
+    taxonomic = wildlife_df['Taxonomic Group'].unique()
+    common_name = wildlife_df['Common Name'].dropna()
+    options = [f'Pick one' + i for i in taxonomic]
+    search_tax = st.selectbox(
+        "What Taxonomic Group do you want to pick from?",
+        taxonomic,
+        index=0,
         )
-        st.altair_chart(alt_chart, use_container_width=True)
+    if search_tax:
+        common_filtered = wildlife_df[wildlife_df['Taxonomic Group'] == search_tax]['Common Name']
+        search_spec = st.selectbox(
+            "What Species do you want to search for?",
+            common_filtered,
+            index=0,
+        )
+        st.title("Habitat Description:")
+        habitat= wildlife_df[wildlife_df["Common Name"] == search_spec]["Habitat Comment"].unique()
+        st.write(habitat[0])
 
-with tab5:
-      selectbox_species = wildlife_df['Common Name']
-      selectbox_species = selectbox_species.dropna()
-      val = st.selectbox("choose your species!", selectbox_species).lower().capitalize()
 
-      urlBase = "https://en.wikipedia.org/wiki/"
-      urlExt = val
-      urlExtEdit = urlExt.replace(" ", "_")
-      urlComb = urlBase+urlExtEdit
-      st.write("for more info on this species, check out this [link](%s)" % urlComb)
+        col1, col2 = st.columns(2)
+        with col1:
+            st.title("More information")
+            encoded_query = quote(search_spec)
+            wikipedia_url = f"https://en.wikipedia.org/wiki/{encoded_query}"
+            google_url = f"https://google.com/search?q={encoded_query}"
+            st.markdown(f"### [Wikipedia page for '{search_spec}']({wikipedia_url})")
+            st.markdown(f"### [Google page for '{search_spec}']({google_url})")
+        with col2:
+            st.title("Endangered status")
+            endangered_df = wildlife_df[wildlife_df["Common Name"] == search_spec][[ "County","County Status", "NC Status", "State Rank", "Federal Status", "Global Rank"]]
+            st.dataframe(endangered_df)
 
-with tab6:
-    st.title("Map of interest")
-    # gdf = gpd.read_file("map2.geojson")
-    # df = pd.DataFrame(gdf)
-    # #df = {'lat': [35.7596], 'lon': [-79.0193]}
-    # st.map(df)
+fn_map = {
+    "summary": summary,
+    "data": data,
+    "species_select": species_select,
+}
+
+main_window = st.container()
+
+main_workflow = fn_map.get(st.session_state.current_page, summary)
+
+main_workflow()

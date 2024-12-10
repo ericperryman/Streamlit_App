@@ -1,6 +1,4 @@
-"Taxonomic Group","Scientific Name","Common Name","NC Status","Federal Status","State Rank","Global Rank","County","County Status","
-          Habitat Comment
-        "
+"Taxonomic Group","Scientific Name","Common Name","NC Status","Federal Status","State Rank","Global Rank","County","County Status","Habitat Comment"
 "Vascular Plant","Abies fraseri","Fraser Fir","W5","none","S2","G2","Buncombe","Current","spruce-fir forests"
 "Lichen","Abrothallus hypotrachynae","A Lichen","W7","none","S1S3","GNR","Buncombe","Current","On thalli of parmelioid lichens (Hypotrachyna, Parmelinopsis) in humid, shaded forests"
 "Natural Community","Acidic Cove Forest (High Elevation Subtype)","","","none","S2","G3G4Q","Buncombe","Current","null"
@@ -466,9 +464,7 @@
 "Reptile","Virginia valeriae","Smooth Earthsnake","W2","none","S3","G5","Buncombe","Historical","deciduous or mixed woods, usually in mesic soils"
 "Vascular Plant","Woodsia appalachiana","Appalachian Cliff Fern","SR-P","none","S2","G4","Buncombe","Historical","cliffs, rock outcrops"
 "Lichen","Xanthoparmelia monticola","Mountain Rock-shield Lichen","SR-L","none","S1S2","G2?","Buncombe","Historical","high elevation rocky summits and mafic glades"
-"Mammal","Zapus hudsonius","Meadow Jumping Mouse","SR","none","S1","G5","Buncombe","Historical","open moist fields and brushy places, usually near water""Taxonomic Group","Scientific Name","Common Name","NC Status","Federal Status","State Rank","Global Rank","County","County Status","
-          Habitat Comment
-        "
+"Mammal","Zapus hudsonius","Meadow Jumping Mouse","SR","none","S1","G5","Buncombe","Historical","open moist fields and brushy places, usually near water"
 "Natural Community","Acidic Cove Forest (Typic Subtype)","","","none","S4","G5","Rutherford","Current","null"
 "Vascular Plant","Agalinis decemloba (syn. Agalinis acuta)","Piedmont Gerardia","W1","none","S3","G3G4","Rutherford","Historical","dry, open sites"
 "Vascular Plant","Agave virginica (syn. Manfreda virginica)","Eastern Agave","W1","none","S3","G5","Rutherford","Current","granite flatrocks, mafic glades, dry outcrops, dry woodlands"
@@ -762,9 +758,7 @@
 "Vascular Plant","Viola glaberrima","Smooth Violet","W7","none","S1S3","G5T3?","Rutherford","Historical","Rich mesic to wet-mesic forests on lower slopes and bottomlands, especially over mafic or calcareous rocks."
 "Reptile","Virginia valeriae","Smooth Earthsnake","W2","none","S3","G5","Rutherford","Obscure","deciduous or mixed woods, usually in mesic soils"
 "Moss","Weissia sharpii","A Moss","SR-O","none","S1?","G3","Rutherford","Current","calcareous rock, cedar-oak bluffs, cedar barrens"
-"Vascular Plant","Woodsia appalachiana","Appalachian Cliff Fern","SR-P","none","S2","G4","Rutherford","Current","cliffs, rock outcrops""Taxonomic Group","Scientific Name","Common Name","NC Status","Federal Status","State Rank","Global Rank","County","County Status","
-          Habitat Comment
-        "
+"Vascular Plant","Woodsia appalachiana","Appalachian Cliff Fern","SR-P","none","S2","G4","Rutherford","Current","cliffs, rock outcrops"
 "Vascular Plant","Abies fraseri","Fraser Fir","W5","none","S2","G2","Yancey","Current","spruce-fir forests"
 "Bird","Accipiter striatus","Sharp-shinned Hawk","SR","none","S1B,S4N","G5","Yancey","Current","forests and woodlands (for nesting) [breeding evidence only]"
 "Natural Community","Acidic Cove Forest (High Elevation Subtype)","","","none","S2","G3G4Q","Yancey","Current","null"
