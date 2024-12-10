@@ -1,0 +1,36 @@
+﻿CODE,STATUS
+T,Threatened
+SC,Special Concern
+SC-V ,Special Concern-Vulnerable
+SC-H ,Special Concern-Historical
+SR ,Significantly Rare
+SR-G ,Game Animal 
+SR-L ,Limited 
+SR-T ,Throughout 
+SR-D ,Disjunct 
+SR-P ,Peripheral 
+SR-O ,Other 
+W_ ,Watch List 
+W1,Population Decline in NC
+W2 ,Rare but Questionable
+W3,Poorly Known in NC 
+W4 ,Rare but Questionable Documentation
+W5 ,Threat to Habitat
+W6 ,Rare but Believed Not Native
+W7 ,Poorly Known in NC 
+E ,Endangered 
+T ,Threatened 
+T(S/A) ,Threatened due to Similarity of Appearance
+C ,Candidate 
+BGPA ,Bald and Golden Eagle Protection Act
+XN ,Nonessential Experimental Population
+P_ ,Proposed 
+S1 ,Critically Imperiled
+S2 ,Imperiled 
+S3 ,Vulnerable 
+S4 ,Apparently Secure
+S5 ,Secure Common
+S#S# ,Range Rank 
+SH ,Historical 
+SX ,Presumed Extirpated
+SU ,Unrankable 

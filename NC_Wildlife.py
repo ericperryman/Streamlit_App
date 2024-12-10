@@ -90,6 +90,12 @@ def data():
                 tooltip='Common Name'
             ).interactive()
             chart1
+        col3,col4,col5 = st.columns(3)
+        with col4:
+            status_df = pd.read_csv('statuses.csv')
+            selected_status = st.selectbox("Which Status do you want to know about?",status_df)
+            display = status_df[status_df['CODE'] == selected_status]
+            st.write(display)
         
     with tab2:
         selected_taxonomic = st.selectbox(
