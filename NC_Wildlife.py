@@ -109,11 +109,12 @@ def data():
 def species_select():
     st.title("Pick a Taxonomic group & Species for more information!")
     taxonomic = wildlife_df['Taxonomic Group'].unique()
+    filtered_taxonomic = taxonomic[taxonomic != 'Natural Community']
     common_name = wildlife_df['Common Name'].dropna()
-    options = [f'Pick one' + i for i in taxonomic]
+    options = [f'Pick one' + i for i in filtered_taxonomic]
     search_tax = st.selectbox(
         "What Taxonomic Group do you want to pick from?",
-        taxonomic,
+        filtered_taxonomic,
         index=0,
         )
     if search_tax:
