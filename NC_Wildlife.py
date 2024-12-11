@@ -42,7 +42,7 @@ wildlife_df = pd.read_csv('merged-county-files.csv')
 
 def summary():
     st.image('orr_western_nc.jpg')
-    st.title('North Carolina Wildlife effected by Hurricane Helene')
+    st.title('North Carolina Wildlife affected by Hurricane Helene')
     st.write('The purpose of this application is to provide a data driven analysis of the unique ecosystem of North Carolina and the species that may have been impacted by Hurricane Helene. In the Data Overview page, you will be able to view the amount of species that have been catalogued in one of three counties: Buncombe, Yancey, and Rutherford county. While North Carolina has 100 counties, my intended purpose of this application was to identify species within the highest impact zone of Hurricane Helene of October 2024 in Western North Carolina and to view the unique species that call this state their home. This data was accessed by the North Carolina Natural Heritage Program.')
     
     col1,col2,col3 = st.columns(3)
